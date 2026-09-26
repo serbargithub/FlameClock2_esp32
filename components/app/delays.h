@@ -1,3 +1,4 @@
+#include <stdint.h>
 #ifndef _DELAYS_H_
 #define _DELAYS_H_
 

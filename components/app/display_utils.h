@@ -7,6 +7,7 @@ extern "C" {
     
 #include <stdint.h>
 #include <stdbool.h>
+#include "definitions.h"
     
     extern const char *WeekDay[];
     extern const char *Month[];

@@ -1,5 +1,3 @@
-#include <p24Fxxxx.h>
-#include <xc.h>
 #include <stdint.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -7,7 +5,7 @@
 #include "definitions.h"
 #include "adjusting.h"
 #include "display_utils.h"
-#include "Peripferals/rtcc.h"
+#include "peripferals/rtcc.h"
 #include "fonts/fonts.h"
 
 void Adjusting__AdjustParametr(RTCC_DATETIME* dataTime, AdjustingMode_t adjustMode, int16_t direction) {
@@ -105,12 +103,12 @@ void Adjusting__AdjustParametr(RTCC_DATETIME* dataTime, AdjustingMode_t adjustMo
             break;
         case AJUST_MODE__YEARS:
             if (direction == 1) {
-                if (dataTime->year < 2100) {
+                if (dataTime->year < 99) {
                     dataTime->year++;
                     RTCC_Initialize(dataTime);
                 }
             } else {
-                if (dataTime->year > 2022) {
+                if (dataTime->year > 22) {
                     dataTime->year--;
                     RTCC_Initialize(dataTime);
                 }

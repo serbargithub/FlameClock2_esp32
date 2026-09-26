@@ -1,4 +1,3 @@
-#include <p24Fxxxx.h>
 #include <stdbool.h>
 #include <string.h>
 #include <stdio.h>
@@ -65,17 +64,17 @@ void AddPreparedLineToScreen(DisplayFrame_t* displayFrame, uint8_t currentLine) 
 
 bool Display_PutSymbol(DisplayFrame_t* displayFrame, uint8_t screenX, uint8_t screenY, char symbol) {
 
-    if ((screenX > HORIZONTAL_PIXEL_MAX) || (screenX > VERTICAL_LINES_MAX)) {
+    if ((screenX >= HORIZONTAL_PIXEL_MAX) || (screenY >= VERTICAL_LINES_MAX)) {
         return false;
     }
     SymbolData_t* symbolData = Font_GetNewSymbolData(symbol);
     g_CurrentPositionX = screenX;
     g_CurrentPositionY = screenY;
     uint8_t symbolX = 0, symbolY = 0;
-    for (symbolY = 0; symbolY < symbolData->height; symbolY++) {
+    for (symbolY = 0; symbolY < symbolData->height && screenY + symbolY < VERTICAL_LINES_MAX; symbolY++) {
         memset(aLineData, 0xFF, sizeof (aLineData));
         memset(aLineMask, 0, sizeof (aLineData));
-        for (symbolX = 0; symbolX < symbolData->stride; symbolX++) {
+        for (symbolX = 0; symbolX < symbolData->stride && symbolX < HORIZONTAL_BYTES_MAX; symbolX++) {
             uint8_t byteOut = *(symbolData->data + symbolX + symbolY * symbolData->stride);
             aLineData[symbolX] = (byteOut^0xFF);
             aLineMask[symbolX] = 0xFF;
@@ -100,7 +99,7 @@ bool Display_Printf(DisplayFrame_t* displayFrame, uint8_t screenX, uint8_t scree
     char formatted_message[PRINT_STRING_MAX] = "";
     va_list args;
     va_start(args, strToPrint);
-    vsprintf(formatted_message, strToPrint, args);
+    vsnprintf(formatted_message, sizeof(formatted_message), strToPrint, args);
     va_end(args);
     uint8_t symbol = *(formatted_message);
     if (symbol == 0) {
@@ -121,7 +120,7 @@ bool Display_Printf(DisplayFrame_t* displayFrame, uint8_t screenX, uint8_t scree
 
 bool Display_PutPixel(DisplayFrame_t* displayFrame, uint8_t screenX, uint8_t screenY, uint8_t color) {
 
-    if ((screenX > HORIZONTAL_PIXEL_MAX) || (screenX > VERTICAL_LINES_MAX)) {
+    if ((screenX >= HORIZONTAL_PIXEL_MAX) || (screenY >= VERTICAL_LINES_MAX)) {
         return false;
     }
     memset(aLineData, 0xFF, sizeof (aLineData));

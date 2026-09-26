@@ -6,7 +6,7 @@ extern "C" {
 #endif
     
 #include <stdint.h>
-#include "../definitions.h"
+#include "definitions.h"
 
 
 typedef struct{

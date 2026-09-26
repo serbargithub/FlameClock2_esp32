@@ -4,7 +4,7 @@
 #ifdef	__cplusplus
 extern "C" {
 #endif
-#include "../definitions.h" 
+#include "definitions.h"
 
 AdjustingList_t* GetAdjustList__AnalogClockOne();    
 void ScreenInit__AnalogClockOne();

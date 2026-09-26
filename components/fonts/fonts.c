@@ -1,4 +1,3 @@
-#include <p24Fxxxx.h>
 #include <stdint.h>
 #include "fonts.h"
 
@@ -57,7 +56,7 @@ void Font_SetCurrentFont(FontList_t fontList) {
 
 SymbolData_t* Font_GetNewSymbolData(char symbol) {
 
-    if ((symbol > 127) || (symbol < 0)) {
+    if ((unsigned char)symbol > 127) {
         symbol = 0;
     }
     g_CurrentSymbol.width = *(g_CurrenFont.widths + symbol);

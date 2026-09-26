@@ -5,7 +5,7 @@
 extern "C" {
 #endif
     
-#include "../definitions.h"
+#include "definitions.h"
 
 typedef enum {
 	SCREEN__FLAME_CLOCK_ONE,

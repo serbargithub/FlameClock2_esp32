@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #ifndef _PERIFERALS_HAL_H_
 #define _PERIFERALS_HAL_H_
 

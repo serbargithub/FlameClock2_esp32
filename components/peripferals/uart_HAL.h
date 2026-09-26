@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #ifndef _UART_HAL_H_
 #define _UART_HAL_H_
 

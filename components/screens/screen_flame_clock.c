@@ -1,8 +1,7 @@
-#include <p24Fxxxx.h>
 #include <string.h>
 #include "screen_flame_clock.h"
-#include "../adjusting.h"
-#include "../display_utils.h"
+#include "adjusting.h"
+#include "display_utils.h"
 #include "../fonts/fonts.h"
 
 void AdjustFlameClockOne(DisplayFrame_t* displayFrame, RTCC_DATETIME* dataTime, AdjustingMode_t adjustMode);

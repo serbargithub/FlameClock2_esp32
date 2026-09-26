@@ -1,4 +1,3 @@
-#include <p24Fxxxx.h>
 #include "screens.h"
 #include "screen_flame_clock.h"
 #include "screen_analog_clock.h"

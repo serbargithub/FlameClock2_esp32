@@ -1,3 +1,4 @@
+#include <stdint.h>
 #ifndef _SPI_HAL_H_
 #define _SPI_HAL_H_
 

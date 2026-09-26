@@ -1,5 +1,3 @@
-#include <p24Fxxxx.h>
-#include <xc.h>
 #include <stdint.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -9,9 +7,9 @@
 #include "interrupts.h"
 #include "adjusting.h"
 #include "sound.h"
-#include "Peripferals/peripherals_HAL.h"
-#include "Peripferals/uart_HAL.h"
-#include "Peripferals/rtcc.h"
+#include "peripferals/peripherals_HAL.h"
+#include "peripferals/uart_HAL.h"
+#include "peripferals/rtcc.h"
 #include "screens/screens.h"
 
 

@@ -1,13 +1,12 @@
-#include <p24Fxxxx.h>
 #include <stdint.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 #include "delays.h"
 #include "definitions.h"
-#include "Peripferals/peripherals_HAL.h"
-#include "Peripferals/uart_HAL.h"
-#include "Peripferals/spi_HAL.h"
+#include "peripferals/peripherals_HAL.h"
+#include "peripferals/uart_HAL.h"
+#include "peripferals/spi_HAL.h"
 #include "interrupts.h"
 #include "images/screens_static.h"
 #include "fonts/fonts.h"

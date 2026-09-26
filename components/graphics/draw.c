@@ -2,7 +2,7 @@
 #include <stdlib.h> // Provides exit
 #include <ctype.h>
 #include "draw.h"
-#include "../display_utils.h"
+#include "display_utils.h"
 
 typedef struct {
     int x0;
@@ -13,7 +13,7 @@ typedef struct {
 } Line_t;
 
 
-void Draw_Line(char color, DisplayFrame_t* displayFrame, int x0, int y0, int x1, int y1) {
+void Draw__Line(char color, DisplayFrame_t* displayFrame, int x0, int y0, int x1, int y1) {
 
 int mirror_on;
 int a0, b0, a1, b1;
@@ -78,7 +78,7 @@ if((deltax == 0) && (deltay == 0)) {
 }
 
 void SegmentDrawing(DisplayFrame_t* displayFrame, Line_t* showline) {
-    Draw_Line(showline->color, displayFrame, showline->x0, showline->y0, showline->x1, showline->y1);
+    Draw__Line(showline->color, displayFrame, showline->x0, showline->y0, showline->x1, showline->y1);
 }
 
 void  SegmentSetPosition(Line_t* line, int pos_x, int pos_y) {

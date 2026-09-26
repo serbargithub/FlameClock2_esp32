@@ -16,7 +16,7 @@ limitations under the License.
 
 #include <stdint.h>
 #include <stdbool.h>
-#include "../definitions.h"
+#include "definitions.h"
 
 #ifndef _RTCC_H
 #define _RTCC_H

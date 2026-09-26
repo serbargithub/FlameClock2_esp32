@@ -6,7 +6,7 @@
 extern "C" {
 #endif
     
-#include "../definitions.h"
+#include "definitions.h"
 
 extern const unsigned char BlankScreen1[VERTICAL_LINES_MAX][HORIZONTAL_BYTES_MAX];
 extern const unsigned char BlankScreen2[VERTICAL_LINES_MAX][HORIZONTAL_BYTES_MAX];
