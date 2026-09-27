@@ -25,7 +25,7 @@ build/
 *.exe # For any host-side utilities compiled on Windows
 
 # VsCode specific files
-.vscode/
+# .vscode/
 
 # ESP-IDF specific build outputs
 *.bin
