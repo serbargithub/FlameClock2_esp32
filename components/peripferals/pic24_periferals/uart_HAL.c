@@ -1,7 +1,7 @@
 #include <p24Fxxxx.h>
 #include<stdbool.h>
 #include "uart_24F_definitions.h"
-#include "uart_HAL.h"
+#include "../uart_HAL.h"
 
 GETCHAR_CALLBACK g_GetchCallBack;
 

@@ -20,7 +20,7 @@ limitations under the License.
 #include <stdbool.h>
 #include <string.h>
 
-#include "rtcc.h"
+#include "../rtcc.h"
 
 static uint8_t RTCC_DecToBCD(uint8_t value);
 static uint8_t RTCC_BCDToDec(uint8_t value);

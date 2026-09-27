@@ -1,2 +1,14 @@
 CompileFlags:
-    Remove: [-f*, -m*]
+  CompilationDatabase: build
+  # The GCC specs file selects picolibc; clangd cannot interpret GCC specs.
+  Add:
+    - -isystem
+    - C:/Espressif/tools/riscv32-esp-elf/esp-15.2.0_20251204/riscv32-esp-elf/picolibc/include
+  Remove:
+    - -fno-shrink-wrap
+    - -fstrict-volatile-bitfields
+    - -fno-tree-switch-conversion
+    - -fzero-init-padding-bits=all
+    - -fno-malloc-dce
+    - -mtune=*
+    - -specs=*

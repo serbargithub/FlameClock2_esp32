@@ -4,11 +4,15 @@ idf_component_register(
     SRCS
         "hardware_stubs.c"
         "delays_esp.c"
+        "../peripferals/esp32_c3_periferals/uart_console_esp.c"
+        "../peripferals/esp32_c3_periferals/peripherals_esp.c"
+        "../peripferals/esp32_c3_periferals/spi_esp.c"
         "../app/adjusting.c"
         "../app/clock_task.c"
         "../app/debugging.c"
         "../app/display_utils.c"
-        "../app/log.c"
+        "../log/log.c"
+        "../log/log_HAL.c"
         "../app/sound.c"
         "../graphics/draw.c"
         "../screens/screens.c"
@@ -28,9 +32,9 @@ idf_component_register(
         "../images/HelloWorld_100x100_L1.c"
         "../images/Pepsi_100x100_L1.c"
         "../images/triden_100x100_L1.c"
-        "../peripferals/log_HAL.c"
+        "../log/log_HAL.c"
     INCLUDE_DIRS ".." "../app"
-    PRIV_REQUIRES freertos esp_rom
+    PRIV_REQUIRES freertos esp_rom esp_adc esp_driver_gpio esp_driver_spi esp_driver_uart
 )
 
 # The image converter emits flat initializers for 2D byte arrays. This is valid

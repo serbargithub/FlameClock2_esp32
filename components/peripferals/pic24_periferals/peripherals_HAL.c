@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <stdio.h>
-#include "peripherals_HAL.h"
+#include "../peripherals_HAL.h"
 #include "io_ports_names.h"
 #include "peripherals_map.h"
 
@@ -55,7 +55,6 @@ void HAL_PIO__BuckUp1Out(PinValue_t value) {
 }
 
 void HAL_PIO__BuckUp2Out(PinValue_t value) {
-    BUCK_UP2_OUT = value;
 }
 
 void HAL_PIO__DisplayLatch(PinValue_t value) {
