@@ -1,3 +1,4 @@
+#include <stddef.h>
 #include <stdint.h>
 #ifndef _SPI_HAL_H_
 #define _SPI_HAL_H_
@@ -8,6 +9,7 @@ extern "C" {
 
     void HAL_SPI__TurnOff(void);
     void HAL_SPI__Init(void);
+    void HAL_SPI__SendBuffer(const uint8_t* data, size_t length);
     uint8_t HAL_SPI__SendByte(uint8_t);
     uint8_t HAL_SPI__GetByte(void);
 

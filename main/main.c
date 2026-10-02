@@ -12,9 +12,11 @@
 #include "clock_task.h"
 #include "display_utils.h"
 #include "log/log.h"
+#include "cli_main.h"
+#include "esp_console.h"
 
 
-// ESP32-C3 bring-up: UART console is active; other hardware uses stubs.
+// ESP32-C3 hardware port.
 
 static DisplayFrame_t g_PreparedFrame;
 
@@ -28,6 +30,9 @@ void app_main(void) {
     HAL_ADC__InitADC();
     HAL_MAP__GeneralPeripheralsMapping();
     HAL_UART__SerialSetup(UART_SPEED_115200, UART_CH1);
+    const esp_console_config_t console_config = ESP_CONSOLE_CONFIG_DEFAULT();
+    ESP_ERROR_CHECK(esp_console_init(&console_config));
+    ESP_ERROR_CHECK(CLI_RegisterCommands());
     HAL_SPI__Init();
     Interrupt__Setup();
     Clock_Init();
@@ -37,9 +42,11 @@ void app_main(void) {
     HAL_PIO__BuckUp2Out(PIN_ON);
     Display_SetImage(&g_PreparedFrame, (const uint8_t*)ArtsStrade, sizeof (ArtsStrade));
     Interrupt__ShowFrame(&g_PreparedFrame);
-    DebugMsg("Start. USB-UART logging at 115200 baud; display and sound are inactive.");
+    DebugMsg("Start. USB-UART logging at 115200 baud.");
     HAL_UART__CheckAndResetErrors(UART_CH1);
     DelayMs(1000);
+
+    ESP_ERROR_CHECK(CLI_StartREPL());
 
     while (1) {
         DelayMs(20);

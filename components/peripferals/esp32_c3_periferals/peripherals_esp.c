@@ -122,17 +122,8 @@ bool HAL_PIO__GetButtonState(ButtonsName_t button)
 
 bool HAL_ADC__GetPowerState(void)
 {
-    int raw_value = 0;
-
-    if (s_adc_handle == NULL) {
-        HAL_ADC__InitADC();
-    }
-
-    if (adc_oneshot_read(s_adc_handle, POWER_SENSOR_ADC_CHAN, &raw_value) != ESP_OK) {
-        return false;
-    }
-
-    return raw_value > POWER_PRESENT_THRESHOLD;
+    /* TODO: Restore ADC power detection after validating the sensor threshold. */
+    return true;
 }
 
 void HAL_ADC__InitADC(void)

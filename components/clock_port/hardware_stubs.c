@@ -1,23 +1,13 @@
-/* Build-only hardware backend. No GPIO, ADC, SPI or timer setup.
- * RTC stores a fixed software date; it does not advance or survive a reset.
- * Replace these interfaces with ESP-IDF drivers during hardware bring-up.
+/* Temporary software RTC backend.
+ * It stores a fixed date and does not advance or survive a reset.
  */
+#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
-#include "interrupts.h"
-#include "peripferals/peripherals_HAL.h"
-#include "peripferals/spi_HAL.h"
 #include "peripferals/rtcc.h"
 
 static RTCC_DATETIME s_datetime;
-
-void Interrupt__Setup(void) {}
-bool Interrupt__DisableAll(void) { return true; }
-void Interrupt__ShowFrame(DisplayFrame_t *frame) { (void)frame; }
-bool Interrupt__IsFrameEnd(void) { return true; }
-void Interrupt__PlaySound(uint16_t frequency, uint16_t duration)
-{ (void)frequency; (void)duration; }
 
 void RTCC_BuildTimeGet(RTCC_DATETIME *value)
 {

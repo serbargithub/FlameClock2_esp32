@@ -1,4 +1,6 @@
 #include <p24Fxxxx.h>
+#include <stddef.h>
+#include <stdint.h>
 
 //-----------------------------------------
 
@@ -15,6 +17,12 @@ uint8_t HAL_SPI__SendByte(uint8_t c) {
     SPI1BUF = c;
     while (!SPI1STATbits.SPIRBF);
     return SPI1BUF;
+}
+
+void HAL_SPI__SendBuffer(const uint8_t* data, size_t length) {
+    for (size_t i = 0; i < length; ++i) {
+        HAL_SPI__SendByte(data[i]);
+    }
 }
 
 uint8_t HAL_SPI__GetByte(void) {
