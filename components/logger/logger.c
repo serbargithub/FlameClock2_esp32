@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
-#include "log.h"
+#include "logger.h"
 #include "log_print.h"
 
 void LogMsg_lev0(char *text, ...) {

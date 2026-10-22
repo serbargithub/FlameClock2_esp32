@@ -10,7 +10,7 @@
 #include "interrupts.h"
 #include "images/screens_static.h"
 #include "fonts/fonts.h"
-#include "display_utils.h"
+#include "graphics/display_utils.h"
 
 
 static DisplayFrame_t g_DebugFrame;

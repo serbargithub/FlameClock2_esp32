@@ -11,42 +11,12 @@ idf_component_register(
         "adjusting.c"
         "clock_task.c"
         "debugging.c"
-        "display_utils.c"
-        "../log/log.c"
-        "../log/log_print.c"
         "sound.c"
-        "../graphics/draw.c"
         "../screens/screens.c"
         "../screens/screen_analog_clock.c"
         "../screens/screen_flame_clock.c"
-        "../fonts/fonts.c"
-        "../fonts/Antonio-Regular_16_L1.c"
-        "../fonts/BebasNeue-Bold_16_L1.c"
-        "../fonts/BebasNeue-Regular_12_L1.c"
-        "../fonts/BebasNeue-Regular_30_L1.c"
-        "../fonts/m12_16_L1.c"
-        "../fonts/m12_20_L1.c"
-        "../images/artstrade_100x100_mono_100x100_L1.c"
-        "../images/blank_screens_100x100.c"
-        "../images/clock1_100x100_L1.c"
-        "../images/flame_animation1_100x500_L1.c"
-        "../images/HelloWorld_100x100_L1.c"
-        "../images/Pepsi_100x100_L1.c"
-        "../images/triden_100x100_L1.c"
     INCLUDE_DIRS ".." "."
-    REQUIRES delays esp_driver_i2c
-    PRIV_REQUIRES freertos esp_rom esp_adc esp_driver_gpio esp_driver_gptimer
+    REQUIRES common delays esp_driver_i2c
+    PRIV_REQUIRES logger fonts images graphics freertos esp_rom esp_adc esp_driver_gpio esp_driver_gptimer
                   esp_driver_ledc esp_driver_spi esp_driver_uart esp_timer
-)
-
-# The image converter emits flat initializers for 2D byte arrays. This is valid
-# C; keep the generated assets unchanged and silence only this formatting warning.
-set_source_files_properties(
-    "../images/artstrade_100x100_mono_100x100_L1.c"
-    "../images/clock1_100x100_L1.c"
-    "../images/flame_animation1_100x500_L1.c"
-    "../images/HelloWorld_100x100_L1.c"
-    "../images/Pepsi_100x100_L1.c"
-    "../images/triden_100x100_L1.c"
-    PROPERTIES COMPILE_OPTIONS "-Wno-missing-braces"
 )

@@ -1,10 +1,13 @@
 # ESP-IDF build port
 
-The app component (`components/app/CMakeLists.txt`) builds the FlameClock application, graphics and assets
+The app component (`components/app/CMakeLists.txt`) builds the FlameClock application, screens and ESP32 drivers
 for ESP32-C3. Its explicit source list excludes the PIC24 implementations in
 `../components/peripferals/pic24_periferals`, `../components/app/interrupts_pic24.c` and
 `../components/app/delays.c`. Shared HAL headers remain in `../components/peripferals`.
-The portable `../components/log/log_print.c` is included.
+The `logger`, `fonts`, `images` and `graphics` folders each register their own
+component through a dedicated `CMakeLists.txt`. Shared definitions are provided
+by the header-only `common` component. Screens remain registered through `app`
+while their adjustment-display helper remains in the application.
 
 `../components/app/interrupts_esp.c` scans the display from an ESP-IDF GPTimer-driven
 task using double-buffered frames. Sound uses LEDC PWM and an `esp_timer`
@@ -36,9 +39,8 @@ adapter with 3.3 V logic: adapter RX to GPIO21, adapter TX to GPIO20, and GND
 to GND. An onboard USB-to-UART bridge normally already provides this wiring.
 Native USB Serial/JTAG is a different interface.
 
-Application logging lives in `../components/log/log.c` and `../components/log/log.h`, included as
-`log/log.h`. It is compiled through the app component to avoid replacing ESP-IDF's
-own component named `log`. printf/DebugMsg use the UART VFS driver; getch is
+Application logging lives in `../components/logger/logger.c` and `../components/logger/logger.h`, included as
+`logger/logger.h`. It is compiled through the logger component. printf/DebugMsg use the UART VFS driver; getch is
 non-blocking (zero means no character, as in the original interface). Only
 the legacy UART_CH1 is supported. The PIC24 UART implementation is excluded.
 

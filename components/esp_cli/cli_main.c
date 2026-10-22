@@ -3,10 +3,13 @@
 
 #include "cli_main.h"
 #include "esp_console.h"
+#include "linenoise/linenoise.h"
 #include "driver/uart_vfs.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-#include "../app/definitions.h"
+#include "definitions.h"
+
+#define CLI_LINE_BUFFER_SIZE 256U
 
 static TaskHandle_t s_repl_task;
 
@@ -42,22 +45,24 @@ esp_err_t CLI_RegisterCommands(void)
 static void cli_repl_task(void *argument)
 {
     (void)argument;
-    char line[256];
 
     setvbuf(stdin, NULL, _IONBF, 0);
     printf("Type 'help' to list commands.\n");
 
     while (1) {
-        printf("%s> ", DEVICE_NAME);
-        fflush(stdout);
-
-        if (fgets(line, sizeof(line), stdin) == NULL) {
+        /* Dumb mode echoes characters and handles Backspace without ANSI. */
+        char *line = linenoise(DEVICE_NAME "> ");
+        if (line == NULL) {
             clearerr(stdin);
             vTaskDelay(pdMS_TO_TICKS(100));
             continue;
         }
 
-        if (strchr(line, '\n') == NULL) {
+        /* Dumb mode returns when its buffer fills, before reading Enter.
+         * Discard the rest so an overlong command is never run in pieces.
+         */
+        if (strlen(line) >= CLI_LINE_BUFFER_SIZE - 1U) {
+            linenoiseFree(line);
             int character;
             while ((character = getchar()) != '\n' && character != EOF) {
             }
@@ -65,9 +70,9 @@ static void cli_repl_task(void *argument)
             continue;
         }
 
-        line[strcspn(line, "\r\n")] = '\0';
         int command_result = 0;
         esp_err_t error = esp_console_run(line, &command_result);
+        linenoiseFree(line);
         if (error == ESP_ERR_NOT_FOUND) {
             printf("Unknown command. Type 'help'.\n");
         } else if (error == ESP_ERR_INVALID_ARG) {
@@ -91,6 +96,12 @@ esp_err_t CLI_StartREPL(void)
                                              ESP_LINE_ENDINGS_CR) != 0) {
         return ESP_FAIL;
     }
+
+    if (linenoiseSetMaxLineLen(CLI_LINE_BUFFER_SIZE) != 0) {
+        return ESP_ERR_INVALID_ARG;
+    }
+    linenoiseSetDumbMode(1);
+    linenoiseAllowEmpty(true);
 
     esp_err_t error = esp_console_register_help_command();
     if (error != ESP_OK) {

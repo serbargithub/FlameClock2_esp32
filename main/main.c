@@ -10,8 +10,8 @@
 #include "images/screens_static.h"
 #include "interrupts.h"
 #include "clock_task.h"
-#include "display_utils.h"
-#include "log/log.h"
+#include "graphics/display_utils.h"
+#include "logger/logger.h"
 #include "cli_main.h"
 #include "esp_console.h"
 

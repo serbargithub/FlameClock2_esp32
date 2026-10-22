@@ -2,7 +2,7 @@
 #include "screen_analog_clock.h"
 #include "adjusting.h"
 #include "../images/screens_static.h"
-#include "display_utils.h"
+#include "graphics/display_utils.h"
 #include "../fonts/fonts.h"
 #include "../graphics/draw.h"
 

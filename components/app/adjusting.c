@@ -4,7 +4,7 @@
 #include <string.h>
 #include "definitions.h"
 #include "adjusting.h"
-#include "display_utils.h"
+#include "graphics/display_utils.h"
 #include "peripferals/rtcc.h"
 #include "fonts/fonts.h"
 
