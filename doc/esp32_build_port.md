@@ -1,19 +1,18 @@
 # ESP-IDF build port
 
-This component builds the portable FlameClock application, graphics and assets
+The app component (`components/app/CMakeLists.txt`) builds the FlameClock application, graphics and assets
 for ESP32-C3. Its explicit source list excludes the PIC24 implementations in
-`../peripferals/pic24_periferals`, `../app/interrupts_pic24.c` and
-`../app/delays.c`. Shared HAL headers remain in `../peripferals`.
-The portable `../log/log_HAL.c` is included.
+`../components/peripferals/pic24_periferals`, `../components/app/interrupts_pic24.c` and
+`../components/app/delays.c`. Shared HAL headers remain in `../components/peripferals`.
+The portable `../components/log/log_print.c` is included.
 
-`../app/interrupts_esp.c` scans the display from an ESP-IDF GPTimer-driven
+`../components/app/interrupts_esp.c` scans the display from an ESP-IDF GPTimer-driven
 task using double-buffered frames. Sound uses LEDC PWM and an `esp_timer`
-one-shot for its duration. `../peripferals/esp32_c3_periferals/rtcc_DS3231.c`
+one-shot for its duration. `../components/peripferals/esp32_c3_periferals/rtcc_DS3231.c`
 implements the RTC interface using a DS3231M at I2C address 0x68, with SDA on
 GPIO18 and SCL on GPIO19 at 100 kHz. RTC startup initializes the I2C HAL;
 these pins cannot simultaneously serve native USB Serial/JTAG. Use external
 pull-ups to 3.3 V and a backup battery for timekeeping across power loss.
-The RTC functions have been removed from `hardware_stubs.c`.
 
 The application uses decimal dates, years 00..99 (2000..2099), and weekdays
 Monday=1 through Sunday=7. The RTC driver also accepts/returns BCD when the
@@ -29,7 +28,7 @@ last value. RTC calls are task-context only; initialize before concurrent use.
 `delays_esp.c` provides FreeRTOS millisecond delays (rounded up to a tick) and
 ESP ROM microsecond delays. Log output uses the default ESP-IDF console.
 
-`../peripferals/esp32_c3_periferals/uart_console_esp.c` implements the legacy UART interfaces using the ESP-IDF
+`../components/peripferals/esp32_c3_periferals/uart_console_esp.c` implements the legacy UART interfaces using the ESP-IDF
 UART driver. UART_CH1 maps to the configured console, currently UART0 at
 115200 baud, 8 data bits, no parity, 1 stop bit, no hardware flow control.
 The default ESP32-C3 pins are TX GPIO21 and RX GPIO20. Connect a USB-to-UART
@@ -37,8 +36,8 @@ adapter with 3.3 V logic: adapter RX to GPIO21, adapter TX to GPIO20, and GND
 to GND. An onboard USB-to-UART bridge normally already provides this wiring.
 Native USB Serial/JTAG is a different interface.
 
-Application logging lives in `../log/log.c` and `../log/log.h`, included as
-`log/log.h`. It is compiled through clock_port to avoid replacing ESP-IDF's
+Application logging lives in `../components/log/log.c` and `../components/log/log.h`, included as
+`log/log.h`. It is compiled through the app component to avoid replacing ESP-IDF's
 own component named `log`. printf/DebugMsg use the UART VFS driver; getch is
 non-blocking (zero means no character, as in the original interface). Only
 the legacy UART_CH1 is supported. The PIC24 UART implementation is excluded.
@@ -57,5 +56,4 @@ The configured target is ESP32-C3. For a fresh configuration, first run
 `idf.py set-target esp32c3`. Build outputs are `build/flame_clock.elf` and
 `build/flame_clock.bin`. Building does not flash a device.
 
-Do not add the PIC24 register drivers to the
-ESP-IDF build.
+Do not add the PIC24 register drivers to the ESP-IDF build.
