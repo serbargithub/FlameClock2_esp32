@@ -2,7 +2,8 @@
 # deliberately excluded. ESP-IDF implementations supply those interfaces.
 idf_component_register(
     SRCS
-        "hardware_stubs.c"
+        "../peripferals/esp32_c3_periferals/rtcc_DS3231.c"
+        "../peripferals/esp32_c3_periferals/i2c_esp.c"
         "../peripferals/esp32_c3_periferals/uart_console_esp.c"
         "../peripferals/esp32_c3_periferals/peripherals_esp.c"
         "../peripferals/esp32_c3_periferals/spi_esp.c"
@@ -34,7 +35,7 @@ idf_component_register(
         "../images/triden_100x100_L1.c"
         "../log/log_HAL.c"
     INCLUDE_DIRS ".." "../app"
-    REQUIRES delays
+    REQUIRES delays esp_driver_i2c
     PRIV_REQUIRES freertos esp_rom esp_adc esp_driver_gpio esp_driver_gptimer
                   esp_driver_ledc esp_driver_spi esp_driver_uart esp_timer
 )

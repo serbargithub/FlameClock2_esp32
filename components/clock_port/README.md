@@ -8,10 +8,23 @@ The portable `../log/log_HAL.c` is included.
 
 `../app/interrupts_esp.c` scans the display from an ESP-IDF GPTimer-driven
 task using double-buffered frames. Sound uses LEDC PWM and an `esp_timer`
-one-shot for its duration. `hardware_stubs.c` now supplies only the temporary
-software RTC. Its date is initialized from build time and stored in RAM; it
-does not advance or persist across resets.
-Dates use decimal fields and years 00–99 (2000–2099).
+one-shot for its duration. `../peripferals/esp32_c3_periferals/rtcc_DS3231.c`
+implements the RTC interface using a DS3231M at I2C address 0x68, with SDA on
+GPIO18 and SCL on GPIO19 at 100 kHz. RTC startup initializes the I2C HAL;
+these pins cannot simultaneously serve native USB Serial/JTAG. Use external
+pull-ups to 3.3 V and a backup battery for timekeeping across power loss.
+The RTC functions have been removed from `hardware_stubs.c`.
+
+The application uses decimal dates, years 00..99 (2000..2099), and weekdays
+Monday=1 through Sunday=7. The RTC driver also accepts/returns BCD when the
+caller's `bcdFormat` flag is set; build time is always returned in decimal.
+Reads accept both 12-hour and 24-hour hardware mode; writes use 24-hour mode.
+Startup preserves retained RTC time. Invalid calendar contents, the century
+bit, or the oscillator-stop flag produce a zero date so `Clock_Init()` can
+initialize the RTC from build time. OSF is cleared only after setting time.
+The existing application policy also resets dates older than the build time.
+I2C errors are logged without aborting; failed reads preserve the caller's
+last value. RTC calls are task-context only; initialize before concurrent use.
 
 `delays_esp.c` provides FreeRTOS millisecond delays (rounded up to a tick) and
 ESP ROM microsecond delays. Log output uses the default ESP-IDF console.
@@ -44,5 +57,5 @@ The configured target is ESP32-C3. For a fresh configuration, first run
 `idf.py set-target esp32c3`. Build outputs are `build/flame_clock.elf` and
 `build/flame_clock.bin`. Building does not flash a device.
 
-The RTC remains a software stub. Do not add the PIC24 register drivers to the
+Do not add the PIC24 register drivers to the
 ESP-IDF build.
