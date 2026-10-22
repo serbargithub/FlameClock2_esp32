@@ -1,6 +1,6 @@
 #include <string.h>
 #include "screen_flame_clock.h"
-#include "adjusting.h"
+#include "screens_common.h"
 #include "graphics/display_utils.h"
 #include "../fonts/fonts.h"
 
@@ -12,7 +12,7 @@ void ScreenDraw__FlameClockOne(DisplayFrame_t* displayFrame, RTCC_DATETIME* data
     memset(displayFrame->data, 0xFF, sizeof (DisplayFrame_t));
     internalTimer++;
     if ((internalTimer & 0x0001)&& (adjustMode > AJUST_MODE__OFF)) {
-        Adjusting__ShowAdjustingParam(displayFrame, dataTime, adjustMode);
+        ScreensCommon__ShowAdjustingParam(displayFrame, dataTime, adjustMode);
     } else {
         Font_SetCurrentFont(FONT_ANTONIO_REGULAR_SIZE16);
         Display_Printf(displayFrame, 15, 5, "Flame clock");

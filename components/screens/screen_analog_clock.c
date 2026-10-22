@@ -1,6 +1,6 @@
 #include <string.h>
 #include "screen_analog_clock.h"
-#include "adjusting.h"
+#include "screens_common.h"
 #include "../images/screens_static.h"
 #include "graphics/display_utils.h"
 #include "../fonts/fonts.h"
@@ -76,7 +76,7 @@ void ScreenDraw__AnalogClockOne(DisplayFrame_t* displayFrame, RTCC_DATETIME* dat
     Display_SetImage(displayFrame, (const uint8_t*)AnalogClock, sizeof (AnalogClock));
     
     if ((internalTimer & 0x0001)&& (adjustMode > AJUST_MODE__OFF)) {
-        Adjusting__ShowAdjustingParam(displayFrame, dataTime, adjustMode);
+        ScreensCommon__ShowAdjustingParam(displayFrame, dataTime, adjustMode);
     }
     Draw__Object(displayFrame, ArrowHours, 51, 50, dataTime->hour * 30 + dataTime->minute/2 );
     Draw__Object(displayFrame, ArrowMinutes, 51, 50, dataTime->minute * 6);

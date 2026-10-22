@@ -5,7 +5,7 @@
 #include "delays.h"
 #include "definitions.h"
 #include "interrupts.h"
-#include "adjusting.h"
+#include "clock_manager.h"
 #include "sound.h"
 #include "peripferals/peripherals_HAL.h"
 #include "peripferals/uart_HAL.h"
@@ -115,12 +115,12 @@ void CheckButtons(void) {
         if (!CheckButtonState(BUTTON3)) {
             Sound__Beep(1000, 50);
             g_TimerAdjustMode = 10;
-            Adjusting__AdjustParametr(&g_DataTime, g_AdjustMode, 1);
+            ClockManager__AdjustParametr(&g_DataTime, g_AdjustMode, 1);
         }
         if (!CheckButtonState(BUTTON4)) {
             Sound__Beep(1000, 50);
             g_TimerAdjustMode = 10;
-            Adjusting__AdjustParametr(&g_DataTime, g_AdjustMode, -1);
+            ClockManager__AdjustParametr(&g_DataTime, g_AdjustMode, -1);
         }
     }
 }

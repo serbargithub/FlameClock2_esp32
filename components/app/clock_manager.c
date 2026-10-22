@@ -3,12 +3,10 @@
 #include <stdio.h>
 #include <string.h>
 #include "definitions.h"
-#include "adjusting.h"
-#include "graphics/display_utils.h"
+#include "clock_manager.h"
 #include "peripferals/rtcc.h"
-#include "fonts/fonts.h"
 
-void Adjusting__AdjustParametr(RTCC_DATETIME* dataTime, AdjustingMode_t adjustMode, int16_t direction) {
+void ClockManager__AdjustParametr(RTCC_DATETIME* dataTime, AdjustingMode_t adjustMode, int16_t direction) {
 
     switch (adjustMode) {
         case AJUST_MODE__HOURS:
@@ -119,38 +117,6 @@ void Adjusting__AdjustParametr(RTCC_DATETIME* dataTime, AdjustingMode_t adjustMo
     }
 }
 
-
-void Adjusting__ShowAdjustingParam(DisplayFrame_t* displayFrame, RTCC_DATETIME* dataTime, AdjustingMode_t adjustMode) {
-
-    Font_SetCurrentFont(FONT_ANTONIO_REGULAR_SIZE16);
-
-    switch (adjustMode) {
-        case AJUST_MODE__HOURS:
-            Display_Printf(displayFrame, 15, 5, "Adjust Hours!");
-            break;
-        case AJUST_MODE__MINUTES:
-            Display_Printf(displayFrame, 15, 5, "Adjust Minutes!");
-            break;
-        case AJUST_MODE__SECONDS:
-            Display_Printf(displayFrame, 15, 5, "Adjust Seconds!");
-            break;
-        case AJUST_MODE__WEEKS:
-            Display_Printf(displayFrame, 15, 5, "Adjust Weeks!");
-            break;
-        case AJUST_MODE__DAYS:
-            Display_Printf(displayFrame, 15, 5, "Adjust Days!");
-            break;
-        case AJUST_MODE__MONTHS:
-            Display_Printf(displayFrame, 15, 5, "Adjust Months!");
-            break;
-        case AJUST_MODE__YEARS:
-            Display_Printf(displayFrame, 15, 5, "Adjust Years!");
-            break;
-        default:
-            Display_Printf(displayFrame, 15, 5, "Adjust Finish!");
-            break;
-    }
-}
 
 //******************************************************************************
 
